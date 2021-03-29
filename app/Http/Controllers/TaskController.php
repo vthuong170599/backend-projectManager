@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
 
-class member extends Controller
+class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,7 @@ class member extends Controller
      */
     public function index()
     {
-        //
+        return Task::all();
     }
 
     /**
@@ -24,7 +25,11 @@ class member extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = Task::create($request->all());
+        return response()->json([
+            'message'=>'success',
+            'task'=>$task
+        ],200);
     }
 
     /**
@@ -35,7 +40,7 @@ class member extends Controller
      */
     public function show($id)
     {
-        //
+        return Task::find($id);
     }
 
     /**
@@ -47,7 +52,11 @@ class member extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $task = Task::find($id)->update($request->all());
+        return response()->json([
+            'message'=>'success',
+            'task'=>$task
+        ],200);
     }
 
     /**
@@ -56,8 +65,8 @@ class member extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        return Task::find($id)->delete;
     }
 }

@@ -1,10 +1,13 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +45,8 @@ Route::group([
     Route::group([
       'middleware' => 'auth:api'
     ], function() {
-        Route::get('logout', [AuthController::class,'logout']);
-        Route::get('user', [AuthController::class,'user']);
+        Route::get('logout', [UserController::class,'logout']);
+        Route::get('user', [UserController::class,'user']);
     });
 });
 Route::resource('roles',RoleController::class);
@@ -55,3 +58,14 @@ Route::post('projects', [ProjectController::class,'store']);
 Route::put('projects/{id}', [ProjectController::class,'update']);
 Route::delete('projects/{id}', [ProjectController::class,'delete']);
 Route::get('project', [ProjectController::class,'search']);
+Route::get('all-user', [UserController::class,'getAllUser']);
+
+Route::resource('roles',RoleController::class);
+
+Route::prefix('task')->group(function () {
+    Route::get('','TaskController@index');
+    Route::post('','TaskController@store');
+    Route::get('/{id}','TaskController@show');
+    Route::put('/{id}','TaskController@update');
+    Route::delete('/{id}','TaskController@delete');
+});

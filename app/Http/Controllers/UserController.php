@@ -4,16 +4,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
-class AuthController extends Controller
+
+class UserController extends Controller
 {
     /**
-     * Create user
-     *
-     * @param  [string] name
-     * @param  [string] email
-     * @param  [string] password
-     * @param  [string] password_confirmation
-     * @return [string] message
+     * register user
+     *  @param  \Illuminate\Http\Request  $request
+     * @return message if register success
      */
     public function signup(Request $request)
     {
@@ -50,15 +47,17 @@ class AuthController extends Controller
             'remember_me' => 'boolean'
         ]);
         $credentials = request(['email', 'password']);
-        if(!Auth::attempt($credentials))
+        if (!Auth::attempt($credentials)) {
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
+        }
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
-        if ($request->remember_me)
+        if ($request->remember_me) {
             $token->expires_at = Carbon::now()->addWeeks(1);
+        }
         $token->save();
         return response()->json([
             'access_token' => $tokenResult->accessToken,
@@ -88,5 +87,13 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+    }
+
+    /**
+     * get all user in database
+     * @return Array user
+     */
+    public function getAllUser(){
+        return User::paginate(10);
     }
 }
