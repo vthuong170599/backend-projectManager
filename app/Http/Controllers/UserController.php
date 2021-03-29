@@ -1,11 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use App\Models\User;    
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -31,7 +29,6 @@ class UserController extends Controller
             'message' => 'Successfully created user!'
         ], 201);
     }
-  
     /**
      * Login user and create token
      *
@@ -70,7 +67,6 @@ class UserController extends Controller
             )->toDateTimeString()
         ]);
     }
-  
     /**
      * Logout user (Revoke the token)
      *
@@ -83,7 +79,6 @@ class UserController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
-  
     /**
      * Get the authenticated User
      *
