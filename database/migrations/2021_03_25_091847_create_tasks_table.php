@@ -19,10 +19,10 @@ class CreateTasksTable extends Migration
             $table->tinyInteger('status');
             $table->text('content');
             $table->integer('priority');
-            $table->string('spent_time');
+            $table->string('spent_time')->nullable();
             $table->string('estimated_time');
-            $table->dateTime('start_date');
-            $table->dateTime('due_date');
+            $table->string('start_date');
+            $table->string('due_date');
             $table->bigInteger('member_id');
             $table->bigInteger('id_project');
             $table->text('note');

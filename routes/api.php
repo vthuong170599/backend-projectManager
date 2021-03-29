@@ -35,4 +35,12 @@ Route::group([
         Route::get('user', [UserController::class,'user']);
     });
 });
+Route::get('all-user', [UserController::class,'getAllUser']);
 Route::resource('roles',RoleController::class);
+Route::prefix('task')->group(function () {
+    Route::get('list','TaskController@index');
+    Route::post('store','TaskController@store');
+    Route::get('show/{id}','TaskController@show');
+    Route::put('update/{id}','TaskController@update');
+    Route::delete('delete/{id}','TaskController@destroy');
+});
