@@ -36,11 +36,21 @@ Route::group([
     });
 });
 Route::get('all-user', [UserController::class,'getAllUser']);
-Route::resource('roles',RoleController::class);
+
 Route::prefix('task')->group(function () {
     Route::get('list','TaskController@index');
     Route::post('store','TaskController@store');
     Route::get('show/{id}','TaskController@show');
     Route::put('update/{id}','TaskController@update');
     Route::delete('delete/{id}','TaskController@destroy');
+});
+
+Route::prefix('roles')->group(function () {
+    Route::get('','RoleController@index');
+    Route::post('','RoleController@store');
+    Route::get('/{id}','RoleController@show');
+    Route::put('/{id}','RoleController@update');
+    Route::delete('/{id}','RoleController@destroy');
+
+   
 });

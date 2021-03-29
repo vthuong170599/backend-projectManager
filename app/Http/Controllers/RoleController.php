@@ -52,7 +52,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+        $role = Role::find($id);
+        return response()->json($role, 201);
     }
 
     /**
@@ -73,9 +74,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Role $role)
+    public function update(Request $request,$id)
     {
-        $role->update($request->all());      
+        $role = Role::find($id)->update($request->all());
         return response()->json($role, 200);
     }
 
