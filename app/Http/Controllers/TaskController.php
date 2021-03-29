@@ -12,9 +12,9 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Task $task)
     {
-        return Task::all();
+       return $task->with(['Member','Project'])->get()->toArray();
     }
 
     /**
