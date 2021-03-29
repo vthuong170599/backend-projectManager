@@ -9,6 +9,11 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    /**
+     * register user
+     *  @param  \Illuminate\Http\Request  $request
+     * @return message if register success
+     */
     public function signup(Request $request)
     {
         $request->validate([
@@ -87,5 +92,13 @@ class UserController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+    }
+
+    /**
+     * get all user in database
+     * @return Array user
+     */
+    public function getAllUser(){
+        return User::paginate(10);
     }
 }
