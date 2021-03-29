@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +33,25 @@ Route::group([
         Route::get('user', 'AuthController@user');
     });
 });
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', [AuthController::class,'login']);
+    Route::post('signup', [AuthController::class,'signup']);
+
+    Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::get('logout', [AuthController::class,'logout']);
+        Route::get('user', [AuthController::class,'user']);
+    });
+});
+Route::resource('roles',RoleController::class);
+
+
+Route::get('projects',[ProjectController::class,'index']);
+Route::get('projects/{id}', [ProjectController::class,'show']);
+Route::post('projects', [ProjectController::class,'store']);
+Route::put('projects/{id}', [ProjectController::class,'update']);
+Route::delete('projects/{id}', [ProjectController::class,'delete']);
+Route::get('project', [ProjectController::class,'search']);
