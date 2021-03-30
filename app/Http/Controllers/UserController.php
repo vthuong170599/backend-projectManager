@@ -99,4 +99,8 @@ class UserController extends Controller
         $user = $user->search($request->username);
         return response()->json($user,200);
     }
+    public function store(Request $request){
+        $user = User::create($request->all());      
+        return response()->json($user, 201);
+    }
 }

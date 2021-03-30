@@ -4,8 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
 
@@ -36,10 +34,21 @@ Route::group([
         Route::get('user', [UserController::class,'user']);
     });
 });
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('projects',[ProjectController::class,'index']);
+Route::get('projects/{id}', [ProjectController::class,'show']);
+Route::post('projects', [ProjectController::class,'store']);
+Route::put('projects/{id}', [ProjectController::class,'update']);
+Route::delete('projects/{id}', [ProjectController::class,'delete']);
+Route::get('project', [ProjectController::class,'search']);
 Route::get('all-user', [UserController::class,'getAllUser']);
 Route::get('search',[UserController::class,'searchUser']);
 
 Route::resource('roles',RoleController::class);
+
 Route::prefix('task')->group(function () {
     Route::get('/','TaskController@index');
     Route::post('/','TaskController@store');
@@ -62,3 +71,7 @@ Route::post('projects', [ProjectController::class,'store']);
 Route::put('projects/{id}', [ProjectController::class,'update']);
 Route::delete('projects/{id}', [ProjectController::class,'delete']);
 Route::get('project', [ProjectController::class,'search']);
+Route::prefix('user')->group(function () {
+    Route::post('','UserController@store');
+    
+});
