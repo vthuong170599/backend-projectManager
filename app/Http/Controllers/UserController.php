@@ -94,6 +94,6 @@ class UserController extends Controller
      * @return Array user
      */
     public function getAllUser(){
-        return User::paginate(10);
+        return User::all();
     }
 }
