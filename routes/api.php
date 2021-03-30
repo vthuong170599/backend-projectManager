@@ -36,12 +36,26 @@ Route::group([
     });
 });
 Route::get('all-user', [UserController::class,'getAllUser']);
+<<<<<<< HEAD
 Route::get('search',[UserController::class,'searchUser']);
 Route::resource('roles',RoleController::class);
+=======
+
+>>>>>>> b94bcd50a05b0c53829f1d662780941509e7337b
 Route::prefix('task')->group(function () {
     Route::get('/','TaskController@index');
     Route::post('/','TaskController@store');
     Route::get('/{id}','TaskController@show');
     Route::put('/{id}','TaskController@update');
     Route::delete('/{id}','TaskController@destroy');
+});
+
+Route::prefix('roles')->group(function () {
+    Route::get('','RoleController@index');
+    Route::post('','RoleController@store');
+    Route::get('/{id}','RoleController@show');
+    Route::put('/{id}','RoleController@update');
+    Route::delete('/{id}','RoleController@destroy');
+
+   
 });
