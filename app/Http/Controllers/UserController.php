@@ -96,4 +96,9 @@ class UserController extends Controller
     public function getAllUser(){
         return User::paginate(10);
     }
+
+    public function searchUser(Request $request,User $user){
+        $user = $user->search($request->username);
+        return response()->json($user,200);
+    }
 }
