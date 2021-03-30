@@ -60,11 +60,9 @@ class UserController extends Controller
         }
         $token->save();
         return response()->json([
-            'access_token' => $tokenResult->accessToken,
+            'accessToken' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse(
-                $tokenResult->token->expires_at
-            )->toDateTimeString()
+            'user' => Auth::user()
         ]);
     }
     /**
@@ -86,7 +84,7 @@ class UserController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json($request->user());
+        return response()->json(['user'=>$request->user()],200);
     }
 
     /**
@@ -97,6 +95,10 @@ class UserController extends Controller
         return User::paginate(10);
     }
 
+    public function searchUser(Request $request,User $user){
+        $user = $user->search($request->username);
+        return response()->json($user,200);
+    }
     public function store(Request $request){
         $user = User::create($request->all());      
         return response()->json($user, 201);
