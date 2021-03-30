@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -65,6 +67,13 @@ class UserController extends Controller
             'user' => Auth::user()
         ]);
     }
+
+    public function show($id)
+    {
+        $user = User::find($id);
+        return response()->json(["user" => $user], 200);
+    }
+
     /**
      * Logout user (Revoke the token)
      *
@@ -84,23 +93,26 @@ class UserController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json(['user'=>$request->user()],200);
+        return response()->json(['user' => $request->user()], 200);
     }
 
     /**
      * get all user in database
      * @return Array user
      */
-    public function getAllUser(){
+    public function getAllUser()
+    {
         return User::paginate(10);
     }
 
-    public function searchUser(Request $request,User $user){
+    public function searchUser(Request $request, User $user)
+    {
         $user = $user->search($request->username);
-        return response()->json($user,200);
+        return response()->json($user, 200);
     }
-    public function store(Request $request){
-        $user = User::create($request->all());      
+    public function store(Request $request)
+    {
+        $user = User::create($request->all());
         return response()->json($user, 201);
     }
 }
