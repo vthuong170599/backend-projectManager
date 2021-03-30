@@ -60,12 +60,20 @@ Route::delete('projects/{id}', [ProjectController::class,'delete']);
 Route::get('project', [ProjectController::class,'search']);
 Route::get('all-user', [UserController::class,'getAllUser']);
 
-Route::resource('roles',RoleController::class);
-
 Route::prefix('task')->group(function () {
     Route::get('','TaskController@index');
     Route::post('','TaskController@store');
     Route::get('/{id}','TaskController@show');
     Route::put('/{id}','TaskController@update');
     Route::delete('/{id}','TaskController@delete');
+});
+
+Route::prefix('roles')->group(function () {
+    Route::get('','RoleController@index');
+    Route::post('','RoleController@store');
+    Route::get('/{id}','RoleController@show');
+    Route::put('/{id}','RoleController@update');
+    Route::delete('/{id}','RoleController@destroy');
+
+   
 });
