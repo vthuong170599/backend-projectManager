@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,16 +46,17 @@ Route::put('projects/{id}', [ProjectController::class,'update']);
 Route::delete('projects/{id}', [ProjectController::class,'delete']);
 Route::get('project', [ProjectController::class,'search']);
 Route::get('all-user', [UserController::class,'getAllUser']);
+Route::get('user/{id}', [UserController::class,'show']);
 Route::get('search',[UserController::class,'searchUser']);
 
 Route::resource('roles',RoleController::class);
 
 Route::prefix('task')->group(function () {
-    Route::get('/','TaskController@index');
-    Route::post('/','TaskController@store');
-    Route::get('/{id}','TaskController@show');
-    Route::put('/{id}','TaskController@update');
-    Route::delete('/{id}','TaskController@destroy');
+    Route::get('/',[TaskController::class,'index']);
+    Route::post('/',[TaskController::class,'store']);
+    Route::get('/{id}',[TaskController::class,'show']);
+    Route::put('/{id}',[TaskController::class,'update']);
+    Route::delete('/{id}',[TaskController::class,'destroy']);
 });
 
 Route::prefix('roles')->group(function () {
