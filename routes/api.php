@@ -7,6 +7,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,12 +37,9 @@ Route::group([
     });
 });
 Route::get('all-user', [UserController::class,'getAllUser']);
-<<<<<<< HEAD
 Route::get('search',[UserController::class,'searchUser']);
-Route::resource('roles',RoleController::class);
-=======
 
->>>>>>> b94bcd50a05b0c53829f1d662780941509e7337b
+Route::resource('roles',RoleController::class);
 Route::prefix('task')->group(function () {
     Route::get('/','TaskController@index');
     Route::post('/','TaskController@store');
@@ -56,6 +54,11 @@ Route::prefix('roles')->group(function () {
     Route::get('/{id}','RoleController@show');
     Route::put('/{id}','RoleController@update');
     Route::delete('/{id}','RoleController@destroy');
-
-   
 });
+
+Route::get('projects',[ProjectController::class,'index']);
+Route::get('projects/{id}', [ProjectController::class,'show']);
+Route::post('projects', [ProjectController::class,'store']);
+Route::put('projects/{id}', [ProjectController::class,'update']);
+Route::delete('projects/{id}', [ProjectController::class,'delete']);
+Route::get('project', [ProjectController::class,'search']);
