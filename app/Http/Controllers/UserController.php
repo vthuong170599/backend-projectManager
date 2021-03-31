@@ -24,7 +24,8 @@ class UserController extends Controller
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
+            'role_id'=>$request->role_id
         ]);
         $user->save();
         return response()->json([
