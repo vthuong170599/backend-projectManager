@@ -19,6 +19,10 @@ use App\Http\Controllers\TaskController;
 |
 */
 
+
+/**
+ * router user
+ */
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -35,29 +39,51 @@ Route::group([
         Route::get('user', [UserController::class,'user']);
     });
 });
+
+Route::get('all-user', [UserController::class,'getAllUser']);
+Route::get('user/{id}', [UserController::class,'show']);
+Route::get('search',[UserController::class,'searchUser']);
+Route::put('user/{id}',[UserController::class,'update']);
+
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
 
+
+/**
+ * router project
+ */
 Route::get('projects',[ProjectController::class,'index']);
 Route::get('projects/{id}', [ProjectController::class,'show']);
 Route::post('projects', [ProjectController::class,'store']);
 Route::put('projects/{id}', [ProjectController::class,'update']);
 Route::delete('projects/{id}', [ProjectController::class,'delete']);
 Route::get('project', [ProjectController::class,'search']);
-Route::get('all-user', [UserController::class,'getAllUser']);
-Route::get('search',[UserController::class,'searchUser']);
 
-Route::resource('roles',RoleController::class);
-
+/**
+ * router task
+ */
 Route::prefix('task')->group(function () {
+<<<<<<< HEAD
     Route::get('/','TaskController@index');
     Route::post('/','TaskController@store');
     Route::get('/{id}','TaskController@show');
     Route::put('/{id}','TaskController@update');
     Route::delete('/{id}','TaskController@delete');
+=======
+    Route::get('/',[TaskController::class,'index']);
+    Route::post('/',[TaskController::class,'store']);
+    Route::get('/{id}',[TaskController::class,'show']);
+    Route::put('/{id}',[TaskController::class,'update']);
+    Route::delete('/{id}',[TaskController::class,'destroy']);
+    Route::get('',[TaskController::class,'search']);
+>>>>>>> 880846942df0a6d7862495e0005d038c00de8e2d
 });
 
+/**
+ * router roles
+ */
+Route::resource('roles',RoleController::class);
 Route::prefix('roles')->group(function () {
     Route::get('','RoleController@index');
     Route::post('','RoleController@store');
@@ -66,6 +92,7 @@ Route::prefix('roles')->group(function () {
     Route::delete('/{id}','RoleController@destroy');
 });
 
+<<<<<<< HEAD
 Route::get('projects',[ProjectController::class,'index']);
 Route::get('projects/{id}', [ProjectController::class,'show']);
 Route::post('projects', [ProjectController::class,'store']);
@@ -76,3 +103,5 @@ Route::prefix('user')->group(function () {
     Route::post('','UserController@store');
 
 });
+=======
+>>>>>>> 880846942df0a6d7862495e0005d038c00de8e2d

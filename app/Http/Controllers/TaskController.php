@@ -65,8 +65,18 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function destroy($id)
     {
+<<<<<<< HEAD
         return Task::find($id)->delete();
+=======
+        $task = Task::find($id)->delete();
+        return response()->json(['task'=>$task],200);
+    }
+
+    public function search(Request $request,Task $task){
+        $task = $task->search($request->subject);
+        return response()->json(['task'=>$task],200);
+>>>>>>> 880846942df0a6d7862495e0005d038c00de8e2d
     }
 }
