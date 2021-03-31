@@ -46,7 +46,9 @@ Route::put('projects/{id}', [ProjectController::class,'update']);
 Route::delete('projects/{id}', [ProjectController::class,'delete']);
 Route::get('project', [ProjectController::class,'search']);
 Route::get('all-user', [UserController::class,'getAllUser']);
-Route::get('search',[UserController::class,'searchUser']);
+Route::get('search', [UserController::class,'searchUser']);
+Route::get('user/{id}',[UserController::class,'show']);
+Route::put('user/{id}',[UserController::class,'update']);
 
 Route::resource('roles',RoleController::class);
 
