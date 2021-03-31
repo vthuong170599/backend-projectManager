@@ -16,4 +16,8 @@ class Task extends Model
     public function Project(){
         return $this->belongsTo(Project::class,'id_project');
     }
+
+    public function search($subject){
+        return Task::where('subject', 'like', "%{$subject}%")->with(['Member','Project'])->get()->toArray();
+    }
 }

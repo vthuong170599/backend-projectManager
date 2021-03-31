@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::group([
 ], function () {
     Route::post('login', [UserController::class,'login']);
     Route::post('signup', [UserController::class,'signup']);
-  
+
     Route::group([
       'middleware' => 'auth:api'
     ], function() {
@@ -46,16 +47,19 @@ Route::delete('projects/{id}', [ProjectController::class,'delete']);
 Route::get('project', [ProjectController::class,'search']);
 Route::get('all-user', [UserController::class,'getAllUser']);
 Route::get('search',[UserController::class,'searchUser']);
+Route::get('user/{id}',[UserController::class,'show']);
+Route::put('user/{id}',[UserController::class,'update']);
 
 
 
 Route::prefix('task')->group(function () {
-    Route::get('/','TaskController@index');
-    Route::post('/','TaskController@store');
+    Route::get('','TaskController@index');
+    Route::post('','TaskController@store');
     Route::get('/{id}','TaskController@show');
     Route::put('/{id}','TaskController@update');
-    Route::delete('/{id}','TaskController@destroy');
+    Route::delete('/{id}','TaskController@delete');
 });
+Route::get('tasks','TaskController@search');
 
 Route::prefix('roles')->group(function () {
     Route::get('','RoleController@index');
@@ -64,15 +68,4 @@ Route::prefix('roles')->group(function () {
     Route::put('/{id}','RoleController@update');
     Route::delete('/{id}','RoleController@destroy');
     Route::get('search','RoleController@searchRole');
-});
-
-Route::get('projects',[ProjectController::class,'index']);
-Route::get('projects/{id}', [ProjectController::class,'show']);
-Route::post('projects', [ProjectController::class,'store']);
-Route::put('projects/{id}', [ProjectController::class,'update']);
-Route::delete('projects/{id}', [ProjectController::class,'delete']);
-Route::get('project', [ProjectController::class,'search']);
-Route::prefix('user')->group(function () {
-    Route::post('','UserController@store');
-    
 });
