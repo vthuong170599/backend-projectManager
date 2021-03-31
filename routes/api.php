@@ -56,7 +56,7 @@ Route::prefix('task')->group(function () {
     Route::get('/{id}','TaskController@show');
     Route::put('/{id}','TaskController@update');
     Route::delete('/{id}','TaskController@delete');
-    Route::get('',[TaskController::class,'search']);
+    Route::get('/subject=',[TaskController::class,'search']);
 
 });
 
