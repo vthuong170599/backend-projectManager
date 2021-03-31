@@ -14,8 +14,7 @@ class TaskController extends Controller
      */
     public function index(Task $task)
     {
-        $task = $task->with(['Member','Project'])->get()->toArray();
-       return response()->json(['task'=>$task],200);
+       return $task->with(['Member','Project'])->get()->toArray();
     }
 
     /**
@@ -74,7 +73,6 @@ class TaskController extends Controller
 
     public function search(Request $request,Task $task){
         $task = $task->search($request->subject);
-        // dd($task);
         return response()->json(['task'=>$task],200);
     }
 }
