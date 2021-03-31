@@ -47,7 +47,7 @@ Route::get('project', [ProjectController::class,'search']);
 Route::get('all-user', [UserController::class,'getAllUser']);
 Route::get('search',[UserController::class,'searchUser']);
 
-Route::resource('roles',RoleController::class);
+
 
 Route::prefix('task')->group(function () {
     Route::get('/','TaskController@index');
@@ -63,6 +63,7 @@ Route::prefix('roles')->group(function () {
     Route::get('/{id}','RoleController@show');
     Route::put('/{id}','RoleController@update');
     Route::delete('/{id}','RoleController@destroy');
+    Route::get('search','RoleController@searchRole');
 });
 
 Route::get('projects',[ProjectController::class,'index']);

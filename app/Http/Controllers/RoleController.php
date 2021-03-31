@@ -91,4 +91,8 @@ class RoleController extends Controller
        Role::find($id)->delete();
        return response()->json(null, 204);
     }
+    public function searchRole(Request $request,Role $role){
+        $role = $role->search($request->name);
+        return response()->json($role,200);
+    }
 }
