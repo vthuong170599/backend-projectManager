@@ -51,13 +51,12 @@ Route::get('search',[UserController::class,'searchUser']);
 Route::resource('roles',RoleController::class);
 
 Route::prefix('task')->group(function () {
-    Route::get('/','TaskController@index');
-    Route::post('/','TaskController@store');
+    Route::get('','TaskController@index');
+    Route::post('','TaskController@store');
     Route::get('/{id}','TaskController@show');
     Route::put('/{id}','TaskController@update');
     Route::delete('/{id}','TaskController@delete');
-    Route::get('',[TaskController::class,'search']);
-
+    Route::delete('','TaskController@search');
 });
 
 Route::prefix('roles')->group(function () {

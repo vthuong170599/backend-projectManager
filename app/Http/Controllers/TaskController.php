@@ -14,7 +14,8 @@ class TaskController extends Controller
      */
     public function index(Task $task)
     {
-       return $task->with(['Member','Project'])->get()->toArray();
+        $task = $task->with(['Member','Project'])->get()->toArray();
+       return response()->json(['task'=>$task],200);
     }
 
     /**
