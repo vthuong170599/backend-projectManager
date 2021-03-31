@@ -100,9 +100,8 @@ class UserController extends Controller
      * get all user in database
      * @return Array user
      */
-    public function getAllUser()
-    {
-        return User::paginate(10);
+    public function getAllUser(){
+        return User::all();
     }
 
     public function searchUser(Request $request, User $user)
@@ -118,7 +117,7 @@ class UserController extends Controller
             'password' => 'confirmed'
         ]);
         $user = User::find($id);
-        $request->password == '' ? $user->password : bcrypt($request->password); 
+        $request->password == '' ? $user->password : bcrypt($request->password);
         $user = User::find($id)->update([
             'name'=>$request->name,
             'email'=>$request->email,
