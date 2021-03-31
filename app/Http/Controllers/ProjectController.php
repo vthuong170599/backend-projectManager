@@ -37,7 +37,7 @@ class ProjectController extends Controller
         //     $query->where('title','like','%'. $request->title .'%');
         // }
         // return $query->get();
-        return Project::where('title', 'LIKE', '%'  . $request->title . '%')->get();
+        return Project::where('name', 'LIKE', '%'  . $request->name . '%')->get();
     }
 
     /**

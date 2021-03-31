@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::group([
 ], function () {
     Route::post('login', [UserController::class,'login']);
     Route::post('signup', [UserController::class,'signup']);
-  
+
     Route::group([
       'middleware' => 'auth:api'
     ], function() {
@@ -54,7 +55,7 @@ Route::prefix('task')->group(function () {
     Route::post('/','TaskController@store');
     Route::get('/{id}','TaskController@show');
     Route::put('/{id}','TaskController@update');
-    Route::delete('/{id}','TaskController@destroy');
+    Route::delete('/{id}','TaskController@delete');
 });
 
 Route::prefix('roles')->group(function () {
@@ -73,5 +74,5 @@ Route::delete('projects/{id}', [ProjectController::class,'delete']);
 Route::get('project', [ProjectController::class,'search']);
 Route::prefix('user')->group(function () {
     Route::post('','UserController@store');
-    
+
 });

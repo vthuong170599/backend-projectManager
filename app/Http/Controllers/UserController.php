@@ -92,7 +92,7 @@ class UserController extends Controller
      * @return Array user
      */
     public function getAllUser(){
-        return User::paginate(10);
+        return User::all();
     }
 
     public function searchUser(Request $request,User $user){
@@ -100,7 +100,7 @@ class UserController extends Controller
         return response()->json($user,200);
     }
     public function store(Request $request){
-        $user = User::create($request->all());      
+        $user = User::create($request->all());
         return response()->json($user, 201);
     }
 }

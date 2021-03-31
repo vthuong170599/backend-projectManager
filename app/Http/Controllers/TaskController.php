@@ -67,6 +67,6 @@ class TaskController extends Controller
      */
     public function delete($id)
     {
-        return Task::find($id)->delete;
+        return Task::find($id)->delete();
     }
 }
