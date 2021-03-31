@@ -35,7 +35,7 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -71,7 +71,14 @@ class TaskController extends Controller
         return response()->json(['task'=>$task],200);
     }
 
+    /**
+     * search Task
+     * @param \Illuminate\Http\Request  $request
+     * @param App\Models\Task
+     * @return Json data task after search
+     */
     public function search(Request $request,Task $task){
+        // method search App\Models\Task
         $task = $task->search($request->subject);
         return response()->json(['task'=>$task],200);
     }
