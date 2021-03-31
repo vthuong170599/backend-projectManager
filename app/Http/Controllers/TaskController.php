@@ -70,4 +70,9 @@ class TaskController extends Controller
         $task = Task::find($id)->delete();
         return response()->json(['task'=>$task],200);
     }
+
+    public function search(Request $request,Task $task){
+        $task = $task->search($request->subject);
+        return response()->json(['task'=>$task],200);
+    }
 }

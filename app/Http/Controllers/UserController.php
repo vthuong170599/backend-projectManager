@@ -110,9 +110,21 @@ class UserController extends Controller
         $user = $user->search($request->username);
         return response()->json($user, 200);
     }
-    public function store(Request $request)
-    {
-        $user = User::create($request->all());
-        return response()->json($user, 201);
+
+    public function update(Request $request,$id){
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email|',
+            'password' => 'confirmed'
+        ]);
+        $user = User::find($id);
+        $request->password == '' ? $user->password : bcrypt($request->password); 
+        $user = User::find($id)->update([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>$request->password == '' ? $user->password : bcrypt($request->password),
+            'role_id'=>$request->role_id
+        ]);
+        return response()->json(['user'=>$user],200);
     }
 }
