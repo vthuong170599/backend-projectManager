@@ -63,15 +63,15 @@ Route::get('project', [ProjectController::class,'search']);
 /**
  * router task
  */
-Route::prefix('task')->group(function () {
-    Route::get('/',[TaskController::class,'index']);
-    Route::post('/',[TaskController::class,'store']);
-    Route::get('/{id}',[TaskController::class,'show']);
-    Route::put('/{id}',[TaskController::class,'update']);
-    Route::delete('/{id}',[TaskController::class,'destroy']);
-    Route::get('',[TaskController::class,'search']);
-});
-
+// Route::prefix('task')->group(function () {
+//     Route::get('/',[TaskController::class,'index']);
+//     Route::post('/',[TaskController::class,'store']);
+//     Route::get('/{id}',[TaskController::class,'show']);
+//     Route::put('/{id}',[TaskController::class,'update']);
+//     Route::delete('/{id}',[TaskController::class,'destroy']);
+//     Route::get('',[TaskController::class,'search']);
+// });
+Route::resource('task', [TaskController::class]);
 /**
  * router roles
  */
