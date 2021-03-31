@@ -18,6 +18,6 @@ class Task extends Model
     }
 
     public function search($subject){
-        return Task::where('subject', 'like', "%{$subject}%")->get();
+        return Task::where('subject', 'like', "%{$subject}%")->with(['Member','Project'])->get()->toArray();
     }
 }

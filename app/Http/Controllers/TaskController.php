@@ -73,6 +73,7 @@ class TaskController extends Controller
 
     public function search(Request $request,Task $task){
         $task = $task->search($request->subject);
+        // dd($task);
         return response()->json(['task'=>$task],200);
     }
 }

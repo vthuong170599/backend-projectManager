@@ -56,9 +56,9 @@ Route::prefix('task')->group(function () {
     Route::get('/{id}','TaskController@show');
     Route::put('/{id}','TaskController@update');
     Route::delete('/{id}','TaskController@delete');
-    Route::get('/subject=',[TaskController::class,'search']);
 
 });
+Route::get('tasks','TaskController@search');
 
 Route::prefix('roles')->group(function () {
     Route::get('','RoleController@index');
