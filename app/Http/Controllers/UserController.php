@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -60,13 +62,18 @@ class UserController extends Controller
         }
         $token->save();
         return response()->json([
-            'access_token' => $tokenResult->accessToken,
+            'accessToken' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse(
-                $tokenResult->token->expires_at
-            )->toDateTimeString()
+            'user' => Auth::user()
         ]);
     }
+
+    public function show($id)
+    {
+        $user = User::find($id);
+        return response()->json(["user" => $user], 200);
+    }
+
     /**
      * Logout user (Revoke the token)
      *
@@ -86,7 +93,7 @@ class UserController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json($request->user());
+        return response()->json(['user' => $request->user()], 200);
     }
 
     /**
@@ -95,5 +102,28 @@ class UserController extends Controller
      */
     public function getAllUser(){
         return User::all();
+    }
+
+    public function searchUser(Request $request, User $user)
+    {
+        $user = $user->search($request->username);
+        return response()->json($user, 200);
+    }
+
+    public function update(Request $request,$id){
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email|',
+            'password' => 'confirmed'
+        ]);
+        $user = User::find($id);
+        $request->password == '' ? $user->password : bcrypt($request->password);
+        $user = User::find($id)->update([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>$request->password == '' ? $user->password : bcrypt($request->password),
+            'role_id'=>$request->role_id
+        ]);
+        return response()->json(['user'=>$user],200);
     }
 }
