@@ -69,6 +69,11 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * show infor user by id
+     * @param Interger id user 
+     * @return Json data user
+     */
     public function show($id)
     {
         $user = User::find($id);
@@ -105,12 +110,24 @@ class UserController extends Controller
         return User::all();
     }
 
+    /**
+     * search user 
+     * @param \Illuminate\Http\Request  $request
+     * @param App\Models\User
+     * @return Json data user after search
+     */
     public function searchUser(Request $request, User $user)
     {
         $user = $user->search($request->username);
         return response()->json($user, 200);
     }
 
+    /**
+     * update user 
+     * @param \Illuminate\Http\Request  $request
+     * @param Interger id user
+     * @return boolean user update
+     */
     public function update(Request $request,$id){
         $request->validate([
             'name' => 'required|string',
