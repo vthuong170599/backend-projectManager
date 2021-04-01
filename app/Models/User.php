@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+
+    protected $guard_name = 'api';
+
     // use HasFactory, Notifiable;
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,HasRoles;
     /**
      * The attributes that are mass assignable.
      *
@@ -51,5 +55,9 @@ class User extends Authenticatable
      */
     public function search($name){
         return User::where('name', 'like', "%{$name}%")->get();
+    }
+
+    public function Role(){
+        return $this->belongsTo(Role::class);
     }
 }
