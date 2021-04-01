@@ -16,6 +16,7 @@ class UserController extends Controller
      */
     public function signup(Request $request)
     {
+        // dd('123');
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
@@ -25,7 +26,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role_id'=>$request->role_id
+            'role_id'=>$request->role_id == "" ? 2 : $request->role_id
         ]);
         $user->save();
         return response()->json([
