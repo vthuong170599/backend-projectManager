@@ -64,22 +64,13 @@ Route::get('project', [ProjectController::class,'search']);
  * router task
  */
 Route::prefix('task')->group(function () {
-<<<<<<< HEAD
     Route::get('/','TaskController@index');
     Route::post('/','TaskController@store');
     Route::get('/{id}','TaskController@show');
     Route::put('/{id}','TaskController@update');
     Route::delete('/{id}','TaskController@delete');
-=======
-    Route::get('/',[TaskController::class,'index']);
-    Route::post('/',[TaskController::class,'store']);
-    Route::get('/{id}',[TaskController::class,'show']);
-    Route::put('/{id}',[TaskController::class,'update']);
-    Route::delete('/{id}',[TaskController::class,'destroy']);
-    Route::get('',[TaskController::class,'search']);
->>>>>>> 880846942df0a6d7862495e0005d038c00de8e2d
 });
-
+Route::get('tasks','TaskController@search');
 /**
  * router roles
  */
@@ -92,16 +83,3 @@ Route::prefix('roles')->group(function () {
     Route::delete('/{id}','RoleController@destroy');
 });
 
-<<<<<<< HEAD
-Route::get('projects',[ProjectController::class,'index']);
-Route::get('projects/{id}', [ProjectController::class,'show']);
-Route::post('projects', [ProjectController::class,'store']);
-Route::put('projects/{id}', [ProjectController::class,'update']);
-Route::delete('projects/{id}', [ProjectController::class,'delete']);
-Route::get('project', [ProjectController::class,'search']);
-Route::prefix('user')->group(function () {
-    Route::post('','UserController@store');
-
-});
-=======
->>>>>>> 880846942df0a6d7862495e0005d038c00de8e2d
