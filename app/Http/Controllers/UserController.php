@@ -24,7 +24,8 @@ class UserController extends Controller
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
+            'role_id'=>$request->role_id
         ]);
         $user->save();
         return response()->json([
@@ -68,6 +69,11 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * show infor user by id
+     * @param Interger id user 
+     * @return Json data user
+     */
     public function show($id)
     {
         $user = User::find($id);
@@ -100,27 +106,28 @@ class UserController extends Controller
      * get all user in database
      * @return Array user
      */
-<<<<<<< HEAD
     public function getAllUser(){
         return User::all();
-=======
-    public function getAllUser()
-    {
-        return User::paginate(10);
->>>>>>> 880846942df0a6d7862495e0005d038c00de8e2d
     }
 
+    /**
+     * search user 
+     * @param \Illuminate\Http\Request  $request
+     * @param App\Models\User
+     * @return Json data user after search
+     */
     public function searchUser(Request $request, User $user)
     {
         $user = $user->search($request->username);
         return response()->json($user, 200);
     }
-<<<<<<< HEAD
-    public function store(Request $request){
-        $user = User::create($request->all());
-        return response()->json($user, 201);
-=======
 
+    /**
+     * update user 
+     * @param \Illuminate\Http\Request  $request
+     * @param Interger id user
+     * @return boolean user update
+     */
     public function update(Request $request,$id){
         $request->validate([
             'name' => 'required|string',
@@ -128,7 +135,7 @@ class UserController extends Controller
             'password' => 'confirmed'
         ]);
         $user = User::find($id);
-        $request->password == '' ? $user->password : bcrypt($request->password); 
+        $request->password == '' ? $user->password : bcrypt($request->password);
         $user = User::find($id)->update([
             'name'=>$request->name,
             'email'=>$request->email,
@@ -136,6 +143,5 @@ class UserController extends Controller
             'role_id'=>$request->role_id
         ]);
         return response()->json(['user'=>$user],200);
->>>>>>> 880846942df0a6d7862495e0005d038c00de8e2d
     }
 }

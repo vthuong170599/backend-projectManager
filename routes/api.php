@@ -19,10 +19,6 @@ use App\Http\Controllers\TaskController;
 |
 */
 
-
-/**
- * router user
- */
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -39,42 +35,34 @@ Route::group([
         Route::get('user', [UserController::class,'user']);
     });
 });
-
-Route::get('all-user', [UserController::class,'getAllUser']);
-Route::get('user/{id}', [UserController::class,'show']);
-Route::get('search',[UserController::class,'searchUser']);
-Route::put('user/{id}',[UserController::class,'update']);
-
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
 
-
-/**
- * router project
- */
 Route::get('projects',[ProjectController::class,'index']);
 Route::get('projects/{id}', [ProjectController::class,'show']);
 Route::post('projects', [ProjectController::class,'store']);
 Route::put('projects/{id}', [ProjectController::class,'update']);
 Route::delete('projects/{id}', [ProjectController::class,'delete']);
 Route::get('project', [ProjectController::class,'search']);
+Route::get('all-user', [UserController::class,'getAllUser']);
+Route::get('search', [UserController::class,'searchUser']);
+Route::get('user/{id}',[UserController::class,'show']);
+Route::put('user/{id}',[UserController::class,'update']);
 
-/**
- * router task
- */
+Route::resource('roles',RoleController::class);
+
 Route::prefix('task')->group(function () {
     Route::get('/','TaskController@index');
     Route::post('/','TaskController@store');
     Route::get('/{id}','TaskController@show');
     Route::put('/{id}','TaskController@update');
     Route::delete('/{id}','TaskController@delete');
+  
+
 });
 Route::get('tasks','TaskController@search');
-/**
- * router roles
- */
-Route::resource('roles',RoleController::class);
+
 Route::prefix('roles')->group(function () {
     Route::get('','RoleController@index');
     Route::post('','RoleController@store');
@@ -82,4 +70,3 @@ Route::prefix('roles')->group(function () {
     Route::put('/{id}','RoleController@update');
     Route::delete('/{id}','RoleController@destroy');
 });
-

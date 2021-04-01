@@ -44,6 +44,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
+    /**
+     * search user
+     * @param String name 
+     * @return Array data user 
+     */
     public function search($name){
         return User::where('name', 'like', "%{$name}%")->get();
     }
