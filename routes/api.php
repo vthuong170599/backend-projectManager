@@ -50,7 +50,7 @@ Route::get('search', [UserController::class,'searchUser']);
 Route::get('user/{id}',[UserController::class,'show']);
 Route::put('user/{id}',[UserController::class,'update']);
 
-Route::resource('roles',RoleController::class);
+
 
 Route::prefix('task')->group(function () {
     Route::get('/','TaskController@index');
@@ -69,4 +69,5 @@ Route::prefix('roles')->group(function () {
     Route::get('/{id}','RoleController@show');
     Route::put('/{id}','RoleController@update');
     Route::delete('/{id}','RoleController@destroy');
+    Route::get('','RoleController@search');
 });

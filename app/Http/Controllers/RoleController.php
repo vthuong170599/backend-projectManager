@@ -91,4 +91,8 @@ class RoleController extends Controller
        Role::find($id)->delete();
        return response()->json(null, 204);
     }
+    public function search(Request $request)
+    {
+        return Role::where('name', 'LIKE', '%'  . $request->name . '%')->get();
+    }
 }

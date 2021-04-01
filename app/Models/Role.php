@@ -13,4 +13,7 @@ class Role extends Model
         'created_at' => 'datetime:Y-m-d',
         'updated_at' => 'datetime:Y-m-d',
     ];
+    public function search($name){
+        return Role::where('name', 'like', '%$name%')->get();
+    }
 }
