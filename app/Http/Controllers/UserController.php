@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Task;
 
 class UserController extends Controller
 {
@@ -143,5 +144,10 @@ class UserController extends Controller
             'role_id'=>$request->role_id
         ]);
         return response()->json(['user'=>$user],200);
+    }
+
+    public function getTaskOfUser($id){
+        return Task::where('member_id', $id)->get();
+        // return Task::where('member_id', 1)->get();
     }
 }

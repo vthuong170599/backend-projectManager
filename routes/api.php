@@ -49,7 +49,7 @@ Route::get('all-user', [UserController::class,'getAllUser']);
 Route::get('search', [UserController::class,'searchUser']);
 Route::get('user/{id}',[UserController::class,'show']);
 Route::put('user/{id}',[UserController::class,'update']);
-
+Route::get('user/get/{id}',[UserController::class,'getTaskOfUser']);
 
 
 Route::prefix('task')->group(function () {
