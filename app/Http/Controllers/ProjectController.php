@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Traits\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
+    use Permission;
     /**
      * Get all blogs in the db
      * @return Blog[]
@@ -50,6 +53,7 @@ class ProjectController extends Controller
         $data = $request->all();
         $projects = Project::create($data);
         return response()->json($projects, 201);
+        // return response()->json(['message' => 'user has not permission'], 403);
     }
 
     /**
@@ -72,6 +76,10 @@ class ProjectController extends Controller
      */
     public function delete(Request $request, $id)
     {
+        // $user = auth()->guard('api')->user();
+        // if(!$user->can('delete')) {
+        //     abort(403, 'Doesn\'t have permission');
+        // }
         $projects = Project::findOrFail($id);
         $projects->delete();
 

@@ -4,10 +4,11 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\UnauthorizedException;
+use Spatie\Permission\Contracts\Role;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class PermissionMiddleware
 {
@@ -20,6 +21,10 @@ class PermissionMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        // if(!Auth::user()->can('edit')){
+        //     dd('123');
+        // }
+        // dd('321');
+        // return $next($request);
     }
 }

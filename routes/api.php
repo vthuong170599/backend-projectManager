@@ -7,6 +7,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
+use App\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,54 +20,45 @@ use App\Http\Controllers\TaskController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:api')->group(function () {
+    Route::get('logout', [UserController::class, 'logout']);
+    Route::get('user', [UserController::class, 'user']);
+    Route::get('all-user', [UserController::class, 'getAllUser']);
+    Route::middleware(['check.Permission'])->group(function () {
+        Route::get('projects', [ProjectController::class, 'index'])->name('project.index');
+        Route::get('projects/{id}', [ProjectController::class, 'show'])->name('project.show');
+        Route::post('projects', [ProjectController::class, 'store'])->name('project.store');
+        Route::put('projects/{id}', [ProjectController::class, 'update'])->name('project.update');
+        Route::delete('projects/{id}', [ProjectController::class, 'delete'])->name('project.delete');
+        Route::get('project', [ProjectController::class, 'search'])->name('project.search');
+
+        Route::prefix('task')->group(function () {
+            Route::get('/', 'TaskController@index')->name('task.index');
+            Route::post('/', 'TaskController@store')->name('task.store');
+            Route::get('/{id}', 'TaskController@show')->name('task.show');
+            Route::put('/{id}', 'TaskController@update')->name('task.update');
+            Route::delete('/{id}', 'TaskController@delete')->name('task.delete');
+        });
+        Route::get('tasks', 'TaskController@search')->name('task.search');
+
+
+        Route::resource('roles', RoleController::class);
+        Route::prefix('roles')->group(function () {
+            Route::get('', 'RoleController@index')->name('role.index');
+            Route::post('', 'RoleController@store')->name('role.store');
+            Route::get('/{id}', 'RoleController@show')->name('role.show');
+            Route::put('/{id}', 'RoleController@update')->name('role.update');
+            Route::delete('/{id}', 'RoleController@destroy')->name('role.destroy');
+        });
+        Route::get('search', [UserController::class, 'searchUser'])->name('user.searchUser');
+        Route::get('user/{id}', [UserController::class, 'show'])->name('user.show');
+        Route::put('user/{id}', [UserController::class, 'update'])->name('user.update');
+    });
+
 });
 Route::group([
     'prefix' => 'auth'
 ], function () {
-    Route::post('login', [UserController::class,'login']);
-    Route::post('signup', [UserController::class,'signup']);
-
-    Route::group([
-      'middleware' => 'auth:api'
-    ], function() {
-        Route::get('logout', [UserController::class,'logout']);
-        Route::get('user', [UserController::class,'user']);
-    });
-});
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-Route::get('projects',[ProjectController::class,'index']);
-Route::get('projects/{id}', [ProjectController::class,'show']);
-Route::post('projects', [ProjectController::class,'store']);
-Route::put('projects/{id}', [ProjectController::class,'update']);
-Route::delete('projects/{id}', [ProjectController::class,'delete']);
-Route::get('project', [ProjectController::class,'search']);
-Route::get('all-user', [UserController::class,'getAllUser']);
-Route::get('search', [UserController::class,'searchUser']);
-Route::get('user/{id}',[UserController::class,'show']);
-Route::put('user/{id}',[UserController::class,'update']);
-
-Route::resource('roles',RoleController::class);
-
-Route::prefix('task')->group(function () {
-    Route::get('/','TaskController@index');
-    Route::post('/','TaskController@store');
-    Route::get('/{id}','TaskController@show');
-    Route::put('/{id}','TaskController@update');
-    Route::delete('/{id}','TaskController@delete');
-  
-
-});
-Route::get('tasks','TaskController@search');
-
-Route::prefix('roles')->group(function () {
-    Route::get('','RoleController@index');
-    Route::post('','RoleController@store');
-    Route::get('/{id}','RoleController@show');
-    Route::put('/{id}','RoleController@update');
-    Route::delete('/{id}','RoleController@destroy');
+    Route::post('login', [UserController::class, 'login']);
+    Route::post('signup', [UserController::class, 'signup']);
 });
