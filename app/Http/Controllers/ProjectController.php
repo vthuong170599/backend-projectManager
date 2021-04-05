@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -76,5 +77,9 @@ class ProjectController extends Controller
         $projects->delete();
 
         return 204;
+    }
+    public function getTaskOfProject($id){
+        return Task::where('id_project', $id)->get();
+        // return Task::where('member_id', 1)->get();
     }
 }

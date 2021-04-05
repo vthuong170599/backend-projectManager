@@ -45,6 +45,7 @@ Route::post('projects', [ProjectController::class,'store']);
 Route::put('projects/{id}', [ProjectController::class,'update']);
 Route::delete('projects/{id}', [ProjectController::class,'delete']);
 Route::get('project', [ProjectController::class,'search']);
+Route::get('project/get/{id}', [ProjectController::class,'getTaskOfProject']);
 Route::get('all-user', [UserController::class,'getAllUser']);
 Route::get('search', [UserController::class,'searchUser']);
 Route::get('user/{id}',[UserController::class,'show']);
