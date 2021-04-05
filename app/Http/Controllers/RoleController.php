@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role as RolePermission;
 
 class RoleController extends Controller
 {
@@ -45,8 +44,9 @@ class RoleController extends Controller
     public function store(Request $request)
     {
        
-        $role = Role::create($request->all());      
-        return response()->json($role, 201);
+        $role = Role::create($request->all());  
+        $permission = $role->syncPermissions($request->permission);
+        return response()->json([$role,$permission], 201);
     }
 
     /**

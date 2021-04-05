@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
+use Spatie\Permission\Contracts\Permission;
+use Spatie\Permission\Models\Permission as ModelsPermission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
