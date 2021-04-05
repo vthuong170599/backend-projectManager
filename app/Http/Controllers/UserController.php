@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
+use Spatie\Permission\Contracts\Permission;
+use Spatie\Permission\Models\Permission as ModelsPermission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -28,6 +31,7 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
             'role_id'=>$request->role_id == "" ? 2 : $request->role_id
         ]);
+        $user->assignRole($request->role_id);
         $user->save();
         return response()->json([
             'message' => 'Successfully created user!'
@@ -100,7 +104,8 @@ class UserController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json(['user' => $request->user()], 200);
+        $user = Auth::user();
+        return response()->json(['user' => $user], 200);
     }
 
     /**
@@ -136,6 +141,8 @@ class UserController extends Controller
             'password' => 'confirmed'
         ]);
         $user = User::find($id);
+        $user->removeRole($user->role_id);
+        $user->assignRole($request->role_id);
         $request->password == '' ? $user->password : bcrypt($request->password);
         $user = User::find($id)->update([
             'name'=>$request->name,
@@ -144,5 +151,9 @@ class UserController extends Controller
             'role_id'=>$request->role_id
         ]);
         return response()->json(['user'=>$user],200);
+    }
+
+    public function delete($id){
+        return User::find($id)->delete();
     }
 }

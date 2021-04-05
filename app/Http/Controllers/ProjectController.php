@@ -6,10 +6,11 @@ use App\Models\Project;
 use App\Traits\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission as ModelsPermission;
+use Spatie\Permission\Models\Role;
 
 class ProjectController extends Controller
 {
-    use Permission;
     /**
      * Get all blogs in the db
      * @return Blog[]

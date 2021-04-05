@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PermissionController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
@@ -8,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +22,17 @@ use App\Models\Role;
 |
 */
 
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', [UserController::class, 'login'])->name('login');
+    Route::post('signup', [UserController::class, 'signup'])->name('user.signup');
+});
+
 Route::middleware('auth:api')->group(function () {
-    Route::get('logout', [UserController::class, 'logout']);
     Route::get('user', [UserController::class, 'user']);
-    Route::get('all-user', [UserController::class, 'getAllUser']);
+    Route::get('logout', [UserController::class, 'logout'])->name('user.logout');
+    Route::get('all-user', [UserController::class, 'getAllUser'])->name('user.getAll');
     Route::middleware(['check.Permission'])->group(function () {
         Route::get('projects', [ProjectController::class, 'index'])->name('project.index');
         Route::get('projects/{id}', [ProjectController::class, 'show'])->name('project.show');
@@ -42,7 +51,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('tasks', 'TaskController@search')->name('task.search');
 
 
-        Route::resource('roles', RoleController::class);
+        // Route::resource('roles', RoleController::class);
         Route::prefix('roles')->group(function () {
             Route::get('', 'RoleController@index')->name('role.index');
             Route::post('', 'RoleController@store')->name('role.store');
@@ -50,15 +59,10 @@ Route::middleware('auth:api')->group(function () {
             Route::put('/{id}', 'RoleController@update')->name('role.update');
             Route::delete('/{id}', 'RoleController@destroy')->name('role.destroy');
         });
-        Route::get('search', [UserController::class, 'searchUser'])->name('user.searchUser');
+        Route::get('permission',[PermissionController::class,'index'])->name('permission.index');
+        Route::get('search', [UserController::class, 'searchUser'])->name('user.search-user');
         Route::get('user/{id}', [UserController::class, 'show'])->name('user.show');
         Route::put('user/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::delete('user/{id}',[UserController::class,'delete'])->name('user.delete');
     });
-
-});
-Route::group([
-    'prefix' => 'auth'
-], function () {
-    Route::post('login', [UserController::class, 'login']);
-    Route::post('signup', [UserController::class, 'signup']);
 });
