@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\Task;
+use App\Traits\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission as ModelsPermission;
+use Spatie\Permission\Models\Role;
 
 class ProjectController extends Controller
 {
@@ -51,6 +55,7 @@ class ProjectController extends Controller
         $data = $request->all();
         $projects = Project::create($data);
         return response()->json($projects, 201);
+        // return response()->json(['message' => 'user has not permission'], 403);
     }
 
     /**
@@ -73,6 +78,10 @@ class ProjectController extends Controller
      */
     public function delete(Request $request, $id)
     {
+        // $user = auth()->guard('api')->user();
+        // if(!$user->can('delete')) {
+        //     abort(403, 'Doesn\'t have permission');
+        // }
         $projects = Project::findOrFail($id);
         $projects->delete();
 
@@ -80,6 +89,6 @@ class ProjectController extends Controller
     }
     public function getTaskOfProject($id){
         return Task::where('id_project', $id)->get();
-        // return Task::where('member_id', 1)->get();
+        
     }
 }

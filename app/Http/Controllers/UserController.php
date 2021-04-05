@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Task;
+use Spatie\Permission\Contracts\Permission;
+use Spatie\Permission\Models\Permission as ModelsPermission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -17,6 +20,7 @@ class UserController extends Controller
      */
     public function signup(Request $request)
     {
+        // dd('123');
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
@@ -26,7 +30,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role_id' => $request->role_id,
+            'role_id'=>$request->role_id == "" ? 2 : $request->role_id
         ]);
         $user->save();
         return response()->json([
@@ -100,7 +104,8 @@ class UserController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json(['user' => $request->user()], 200);
+        $user = Auth::user();
+        return response()->json(['user' => $user], 200);
     }
 
     /**
