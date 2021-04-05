@@ -17,8 +17,9 @@ class CheckRouterMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
         $name = $request->route()->getName();
+        // dd($name);
         if (
             $name
             && Auth::guard('api')->check()

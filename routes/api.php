@@ -60,8 +60,9 @@ Route::middleware('auth:api')->group(function () {
             Route::delete('/{id}', 'RoleController@destroy')->name('role.destroy');
         });
         Route::get('permission',[PermissionController::class,'index'])->name('permission.index');
-        Route::get('search', [UserController::class, 'searchUser'])->name('user.searchUser');
+        Route::get('search', [UserController::class, 'searchUser'])->name('user.search-user');
         Route::get('user/{id}', [UserController::class, 'show'])->name('user.show');
         Route::put('user/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::delete('user/{id}',[UserController::class,'delete'])->name('user.delete');
     });
 });
